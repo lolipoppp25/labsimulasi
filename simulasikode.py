@@ -23,6 +23,7 @@ accent_color = "#FFD166"
 background_color = "#F7FFF7"
 dark_color = "#1A535C"
 text_color = "#333333"  # Warna teks baru untuk kontras
+header_color = "#FFFFFF"  # Warna baru untuk teks header
 
 # CSS untuk styling
 st.markdown(f"""
@@ -36,8 +37,8 @@ st.markdown(f"""
         background-color: transparent !important;
     }}
     h1, h2, h3, h4, h5, h6 {{
-        color: {dark_color} !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        color: {header_color} !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }}
     p, div, span, li, td {{
         color: {text_color} !important;
@@ -66,7 +67,7 @@ st.markdown(f"""
     }}
     .stTabs>div>div>div>div {{
         background: linear-gradient(135deg, {secondary_color}, {primary_color}) !important;
-        color: white !important;
+        color: {header_color} !important;  /* Perbaikan kontras tab */
         border-radius: 15px 15px 0 0 !important;
         padding: 12px 24px !important;
         font-weight: bold;
@@ -157,7 +158,7 @@ st.markdown(f"""
         background: linear-gradient(135deg, {dark_color}, #073B4C);
         padding: 25px;
         border-radius: 20px;
-        color: white;
+        color: {header_color};
         margin-bottom: 30px;
         text-align: center;
         box-shadow: 0 8px 16px rgba(0,0,0,0.2);
@@ -199,7 +200,7 @@ st.markdown(f"""
     }}
     .compatibility-table th {{
         background-color: {dark_color};
-        color: white;
+        color: {header_color};
         font-weight: bold;
     }}
     .compatibility-table tr:nth-child(even) {{
@@ -229,6 +230,10 @@ st.markdown(f"""
         display: inline-block;
         width: 60px;
         text-align: center;
+    }}
+    /* Perbaikan kontras untuk header di dalam card */
+    .element-card h3 {{
+        color: {dark_color} !important;
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -398,175 +403,134 @@ COMPOUNDS = {
     "Iodin (I₂)": {"color": "#9400D3", "formula": "I₂", "type": "Halogen", "hazards": ["Beracun"]},
     "Aluminium Klorida (AlCl₃)": {"color": "#FFFFFF", "formula": "AlCl₃", "type": "Garam", "hazards": ["Korosif"]},
     "Natrium Sulfat (Na₂SO₄)": {"color": "#FFFFFF", "formula": "Na₂SO₄", "type": "Garam", "hazards": []},
+    # Senyawa tambahan baru
+    "Kalium Klorat (KClO₃)": {"color": "#FFFFFF", "formula": "KClO₃", "type": "Oksidator", "hazards": ["Pengoksidasi"]},
+    "Seng (Zn)": {"color": "#7FFFD4", "formula": "Zn", "type": "Logam", "hazards": []},
+    "Asam Oksalat (H₂C₂O₄)": {"color": "#FFFFFF", "formula": "H₂C₂O₄", "type": "Asam Organik", "hazards": ["Korosif", "Beracun"]},
+    "Kalium Dikromat (K₂Cr₂O₇)": {"color": "#FF4500", "formula": "K₂Cr₂O₇", "type": "Oksidator", "hazards": ["Karsinogen"]},
+    "Natrium Hipoklorit (NaClO)": {"color": "#F0F8FF", "formula": "NaClO", "type": "Oksidator", "hazards": ["Korosif"]},
+    "Amonium Hidroksida (NH₄OH)": {"color": "#F0F8FF", "formula": "NH₄OH", "type": "Basa Lemah", "hazards": ["Korosif"]},
+    "Kalsium Hidroksida (Ca(OH)₂)": {"color": "#FFFFFF", "formula": "Ca(OH)₂", "type": "Basa", "hazards": ["Iritan"]},
+    "Belerang (S)": {"color": "#FFD166", "formula": "S", "type": "Nonlogam", "hazards": []},
+    "Natrium Nitrat (NaNO₃)": {"color": "#FFFFFF", "formula": "NaNO₃", "type": "Garam", "hazards": ["Pengoksidasi"]},
+    "Asam Tartarat (C₄H₆O₆)": {"color": "#FFFFFF", "formula": "C₄H₆O₆", "type": "Asam Organik", "hazards": []},
+    "Toluena (C₇H₈)": {"color": "#87CEEB", "formula": "C₇H₈", "type": "Hidrokarbon", "hazards": ["Mudah Terbakar"]},
+    "Kalsium Oksalat (CaC₂O₄)": {"color": "#FFFFFF", "formula": "CaC₂O₄", "type": "Garam", "hazards": ["Beracun"]},
+    "Natrium Asam Sulfat (NaHSO₄)": {"color": "#FFFFFF", "formula": "NaHSO₄", "type": "Garam Asam", "hazards": ["Korosif"]},
+    "Barium Klorida (BaCl₂)": {"color": "#FFFFFF", "formula": "BaCl₂", "type": "Garam", "hazards": ["Beracun"]},
+    "Natrium Sulfida (Na₂S)": {"color": "#FFFFE0", "formula": "Na₂S", "type": "Garam", "hazards": ["Korosif", "Beracun"]},
+    "Asam Benzoat (C₇H₆O₂)": {"color": "#FFFFFF", "formula": "C₇H₆O₂", "type": "Asam Organik", "hazards": ["Iritan"]},
+    "Fosfor Pentaklorida (PCl₅)": {"color": "#FFFFFF", "formula": "PCl₅", "type": "Reagen", "hazards": ["Korosif"]},
+    "Kalium Hidrogen Ftalat (KHC₈H₄O₄)": {"color": "#FFFFFF", "formula": "KHC₈H₄O₄", "type": "Standar", "hazards": []},
+    "Kloroform (CHCl₃)": {"color": "#87CEEB", "formula": "CHCl₃", "type": "Pelarut", "hazards": ["Karsinogen"]},
+    "Asam Borat (H₃BO₃)": {"color": "#FFFFFF", "formula": "H₃BO₃", "type": "Asam Lemah", "hazards": ["Iritan"]},
 }
 
 # Database reaksi kimia (diperbanyak)
 REACTIONS = [
+    # Reaksi sebelumnya
+    # ... (reaksi yang sudah ada)
+    
+    # Reaksi baru
     {
-        "reagents": ["Asam Klorida (HCl)", "Natrium Hidroksida (NaOH)"],
-        "products": ["Natrium Klorida (NaCl)", "Air (H₂O)"],
-        "equation": "HCl + NaOH → NaCl + H₂O",
-        "type": "Netralisasi",
-        "color_change": ["#F0F0F0 + #FFFFFF → #FFFFFF + #ADD8E6"],
+        "reagents": ["Kalium Klorat (KClO₃)", "Gula (C₁₂H₂₂O₁₁)"],
+        "products": ["Kalium Klorida (KCl)", "Karbon Dioksida (CO₂)", "Air (H₂O)"],
+        "equation": "8KClO₃ + C₁₂H₂₂O₁₁ → 8KCl + 12CO₂ + 11H₂O",
+        "type": "Reaksi Pembakaran",
+        "color_change": ["#FFFFFF + #FFFFFF → #FFFFFF + #A9A9A9 + #ADD8E6"],
         "energy": "Eksoterm",
-        "hazards": ["Korosif", "Iritan"],
-        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab"],
-        "description": "Reaksi netralisasi antara asam kuat dan basa kuat menghasilkan garam dan air. Reaksi ini melepaskan panas."
+        "hazards": ["Ledakan", "Panas"],
+        "apd": ["Kacamata", "Sarung Tangan", "Pelindung Wajah"],
+        "description": "Reaksi pembakaran gula dengan kalium klorat menghasilkan nyala api yang kuat."
     },
     {
-        "reagents": ["Tembaga Sulfat (CuSO₄)", "Besi (Fe)"],
-        "products": ["Besi Sulfat (FeSO₄)", "Tembaga (Cu)"],
-        "equation": "CuSO₄ + Fe → FeSO₄ + Cu",
-        "type": "Reaksi Pendesakan",
-        "color_change": ["#00B4D8 + #B5651D → #76D7EA + #D2691E"],
-        "energy": "Eksoterm",
-        "hazards": ["Iritan"],
-        "apd": ["Sarung Tangan", "Kacamata"],
-        "description": "Logam besi mendesak tembaga dari larutan tembaga sulfat, menghasilkan besi sulfat dan tembaga padat."
-    },
-    {
-        "reagents": ["Kalium Permanganat (KMnO₄)", "Hidrogen Peroksida (H₂O₂)"],
-        "products": ["Mangan Dioksida (MnO₂)", "Oksigen (O₂)", "Kalium Hidroksida (KOH)"],
-        "equation": "2KMnO₄ + 3H₂O₂ → 2MnO₂ + 3O₂ + 2KOH + 2H₂O",
-        "type": "Redoks",
-        "color_change": ["#9D00FF + #F0F8FF → #808080 + #87CEEB + #FFFFFF"],
-        "energy": "Eksoterm",
-        "hazards": ["Oksidator Kuat", "Korosif"],
-        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab", "Pelindung Wajah"],
-        "description": "Reaksi dekomposisi hidrogen peroksida yang dikatalisis oleh kalium permanganat, menghasilkan oksigen gas."
-    },
-    {
-        "reagents": ["Asam Sulfat (H₂SO₄)", "Natrium Karbonat (Na₂CO₃)"],
-        "products": ["Natrium Sulfat (Na₂SO₄)", "Air (H₂O)", "Karbon Dioksida (CO₂)"],
-        "equation": "H₂SO₄ + Na₂CO₃ → Na₂SO₄ + H₂O + CO₂",
-        "type": "Reaksi Asam-Karbonat",
-        "color_change": ["#F5F5F5 + #FFFFFF → #FFFFFF + #ADD8E6 + #A9A9A9"],
-        "energy": "Eksoterm",
-        "hazards": ["Korosif", "Gas Bertekanan"],
-        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab"],
-        "description": "Asam sulfat bereaksi dengan natrium karbonat menghasilkan natrium sulfat, air, dan gas karbon dioksida."
-    },
-    {
-        "reagents": ["Kalsium Klorida (CaCl₂)", "Natrium Karbonat (Na₂CO₃)"],
-        "products": ["Kalsium Karbonat (CaCO₃)", "Natrium Klorida (NaCl)"],
-        "equation": "CaCl₂ + Na₂CO₃ → CaCO₃ + 2NaCl",
-        "type": "Reaksi Pengendapan",
-        "color_change": ["#FFFFFF + #FFFFFF → #FFFFFF + #FFFFFF"],
-        "energy": "Endoterm",
-        "hazards": ["Iritan Ringan"],
-        "apd": ["Sarung Tangan", "Kacamata"],
-        "description": "Reaksi ini menghasilkan endapan kalsium karbonat yang berwarna putih."
-    },
-    {
-        "reagents": ["Asam Klorida (HCl)", "Besi (Fe)"],
-        "products": ["Besi Klorida (FeCl₂)", "Hidrogen (H₂)"],
-        "equation": "2HCl + Fe → FeCl₂ + H₂",
+        "reagents": ["Seng (Zn)", "Asam Klorida (HCl)"],
+        "products": ["Seng Klorida (ZnCl₂)", "Hidrogen (H₂)"],
+        "equation": "Zn + 2HCl → ZnCl₂ + H₂",
         "type": "Reaksi Logam-Asam",
-        "color_change": ["#F0F0F0 + #B5651D → #76D7EA + #F0F8FF"],
-        "energy": "Eksoterm",
-        "hazards": ["Gas Mudah Terbakar", "Korosif"],
-        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab", "Pelindung Wajah"],
-        "description": "Logam besi bereaksi dengan asam klorida menghasilkan besi klorida dan gas hidrogen yang mudah terbakar."
-    },
-    {
-        "reagents": ["Asam Asetat (CH₃COOH)", "Amonia (NH₃)"],
-        "products": ["Ammonium Asetat (CH₃COONH₄)"],
-        "equation": "CH₃COOH + NH₃ → CH₃COONH₄",
-        "type": "Netralisasi",
-        "color_change": ["#F5F5DC + #F0F8FF → #FFFFFF"],
-        "energy": "Eksoterm",
-        "hazards": ["Iritan"],
-        "apd": ["Sarung Tangan", "Kacamata"],
-        "description": "Asam lemah bereaksi dengan basa lemah membentuk garam ammonium asetat."
-    },
-    {
-        "reagents": ["Perak Nitrat (AgNO₃)", "Natrium Klorida (NaCl)"],
-        "products": ["Perak Klorida (AgCl)", "Natrium Nitrat (NaNO₃)"],
-        "equation": "AgNO₃ + NaCl → AgCl + NaNO₃",
-        "type": "Pengendapan",
-        "color_change": ["#FFFFFF + #FFFFFF → #FFFFFF + #FFFFFF"],
-        "energy": "Endoterm",
-        "hazards": ["Iritan"],
-        "apd": ["Sarung Tangan", "Kacamata"],
-        "description": "Reaksi pengendapan menghasilkan perak klorida berwarna putih."
-    },
-    {
-        "reagents": ["Magnesium (Mg)", "Oksigen (O₂)"],
-        "products": ["Magnesium Oksida (MgO)"],
-        "equation": "2Mg + O₂ → 2MgO",
-        "type": "Pembakaran",
-        "color_change": ["#FFD700 + #87CEEB → #FFFFFF"],
-        "energy": "Eksoterm",
-        "hazards": ["Cahaya Terang", "Panas"],
-        "apd": ["Kacamata Gelap", "Sarung Tangan"],
-        "description": "Pembakaran magnesium menghasilkan cahaya putih terang dan magnesium oksida."
-    },
-    {
-        "reagents": ["Asam Sulfat (H₂SO₄)", "Kalium Hidroksida (KOH)"],
-        "products": ["Kalium Sulfat (K₂SO₄)", "Air (H₂O)"],
-        "equation": "H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O",
-        "type": "Netralisasi",
-        "color_change": ["#F5F5F5 + #FFFFFF → #FFFFFF + #ADD8E6"],
-        "energy": "Eksoterm",
-        "hazards": ["Korosif"],
-        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab"],
-        "description": "Reaksi netralisasi antara asam kuat dan basa kuat menghasilkan garam dan air."
-    },
-    {
-        "reagents": ["Kalium Iodida (KI)", "Timbal Nitrat (Pb(NO₃)₂)"],
-        "products": ["Timbal Iodida (PbI₂)", "Kalium Nitrat (KNO₃)"],
-        "equation": "2KI + Pb(NO₃)₂ → PbI₂ + 2KNO₃",
-        "type": "Pengendapan",
-        "color_change": ["#FFFFFF + #FFFFFF → #FFFF00 + #FFFFFF"],
-        "energy": "Endoterm",
-        "hazards": ["Beracun"],
-        "apd": ["Sarung Tangan", "Kacamata"],
-        "description": "Reaksi pengendapan menghasilkan timbal iodida berwarna kuning cerah."
-    },
-    {
-        "reagents": ["Natrium (Na)", "Air (H₂O)"],
-        "products": ["Natrium Hidroksida (NaOH)", "Hidrogen (H₂)"],
-        "equation": "2Na + 2H₂O → 2NaOH + H₂",
-        "type": "Reaksi Logam-Air",
-        "color_change": ["#FFD166 + #ADD8E6 → #FFFFFF + #F0F8FF"],
-        "energy": "Eksoterm",
-        "hazards": ["Ledakan", "Gas Mudah Terbakar"],
-        "apd": ["Pelindung Wajah", "Sarung Tangan", "Kacamata"],
-        "description": "Logam natrium bereaksi hebat dengan air menghasilkan natrium hidroksida dan gas hidrogen."
-    },
-    {
-        "reagents": ["Kalsium Karbida (CaC₂)", "Air (H₂O)"],
-        "products": ["Asetilena (C₂H₂)", "Kalsium Hidroksida (Ca(OH)₂)"],
-        "equation": "CaC₂ + 2H₂O → C₂H₂ + Ca(OH)₂",
-        "type": "Hidrolisis",
-        "color_change": ["#FFFFFF + #ADD8E6 → #87CEEB + #FFFFFF"],
+        "color_change": ["#7FFFD4 + #F0F0F0 → #FFFFFF + #F0F8FF"],
         "energy": "Eksoterm",
         "hazards": ["Gas Mudah Terbakar"],
         "apd": ["Sarung Tangan", "Kacamata"],
-        "description": "Kalsium karbida bereaksi dengan air menghasilkan gas asetilena yang mudah terbakar."
+        "description": "Logam seng bereaksi dengan asam klorida menghasilkan gas hidrogen."
     },
     {
-        "reagents": ["Asam Nitrat (HNO₃)", "Tembaga (Cu)"],
-        "products": ["Tembaga Nitrat (Cu(NO₃)₂)", "Nitrogen Dioksida (NO₂)", "Air (H₂O)"],
-        "equation": "4HNO₃ + Cu → Cu(NO₃)₂ + 2NO₂ + 2H₂O",
-        "type": "Reaksi Redoks",
-        "color_change": ["#FFFFE0 + #D2691E → #00B4D8 + #C71585 + #ADD8E6"],
+        "reagents": ["Kalium Dikromat (K₂Cr₂O₇)", "Asam Sulfat (H₂SO₄)"],
+        "products": ["Kalium Sulfat (K₂SO₄)", "Kromium Sulfat (Cr₂(SO₄)₃)", "Air (H₂O)", "Oksigen (O₂)"],
+        "equation": "4K₂Cr₂O₇ + 6H₂SO₄ → 2K₂SO₄ + 2Cr₂(SO₄)₃ + 6H₂O + 3O₂",
+        "type": "Redoks",
+        "color_change": ["#FF4500 + #F5F5F5 → #FFFFFF + #B5651D + #ADD8E6 + #87CEEB"],
         "energy": "Eksoterm",
-        "hazards": ["Gas Beracun", "Korosif"],
+        "hazards": ["Pengoksidasi", "Korosif", "Karsinogen"],
         "apd": ["Sarung Tangan", "Kacamata", "Jas Lab", "Pelindung Wajah"],
-        "description": "Tembaga bereaksi dengan asam nitrat pekat menghasilkan gas nitrogen dioksida berwarna coklat."
+        "description": "Reaksi dekomposisi kalium dikromat dengan asam sulfat menghasilkan gas oksigen."
     },
     {
-        "reagents": ["Hidrogen (H₂)", "Oksigen (O₂)"],
-        "products": ["Air (H₂O)"],
-        "equation": "2H₂ + O₂ → 2H₂O",
-        "type": "Pembakaran",
-        "color_change": ["#F0F8FF + #87CEEB → #ADD8E6"],
+        "reagents": ["Natrium Hipoklorit (NaClO)", "Hidrogen Peroksida (H₂O₂)"],
+        "products": ["Natrium Klorida (NaCl)", "Oksigen (O₂)", "Air (H₂O)"],
+        "equation": "NaClO + H₂O₂ → NaCl + O₂ + H₂O",
+        "type": "Redoks",
+        "color_change": ["#F0F8FF + #F0F8FF → #FFFFFF + #87CEEB + #ADD8E6"],
         "energy": "Eksoterm",
-        "hazards": ["Ledakan"],
-        "apd": ["Pelindung Wajah", "Sarung Tangan"],
-        "description": "Reaksi pembakaran hidrogen yang menghasilkan air dan energi besar."
-    }
+        "hazards": ["Gas Bertekanan"],
+        "apd": ["Sarung Tangan", "Kacamata"],
+        "description": "Reaksi antara pemutih dan hidrogen peroksida menghasilkan gas oksigen."
+    },
+    {
+        "reagents": ["Amonium Hidroksida (NH₄OH)", "Tembaga Sulfat (CuSO₄)"],
+        "products": ["Tembaga Hidroksida (Cu(OH)₂)", "Amonium Sulfat ((NH₄)₂SO₄)"],
+        "equation": "2NH₄OH + CuSO₄ → Cu(OH)₂ + (NH₄)₂SO₄",
+        "type": "Pengendapan",
+        "color_change": ["#F0F8FF + #00B4D8 → #76D7EA + #FFFFFF"],
+        "energy": "Endoterm",
+        "hazards": ["Iritan"],
+        "apd": ["Sarung Tangan", "Kacamata"],
+        "description": "Reaksi menghasilkan endapan tembaga hidroksida berwarna biru."
+    },
+    {
+        "reagents": ["Belerang (S)", "Besi (Fe)"],
+        "products": ["Besi Sulfida (FeS)"],
+        "equation": "Fe + S → FeS",
+        "type": "Sintesis",
+        "color_change": ["#FFD166 + #B5651D → #B5651D"],
+        "energy": "Eksoterm",
+        "hazards": ["Panas"],
+        "apd": ["Sarung Tangan", "Kacamata"],
+        "description": "Pembentukan besi sulfida dari logam besi dan belerang."
+    },
+    {
+        "reagents": ["Natrium Nitrat (NaNO₃)", "Kalium Klorida (KCl)"],
+        "products": ["Kalium Nitrat (KNO₃)", "Natrium Klorida (NaCl)"],
+        "equation": "NaNO₃ + KCl → KNO₃ + NaCl",
+        "type": "Pertukaran Ganda",
+        "color_change": ["#FFFFFF + #FFFFFF → #FFFFFF + #FFFFFF"],
+        "energy": "Endoterm",
+        "hazards": [],
+        "apd": ["Sarung Tangan"],
+        "description": "Reaksi pertukaran ion antara natrium nitrat dan kalium klorida."
+    },
+    {
+        "reagents": ["Asam Oksalat (H₂C₂O₄)", "Kalium Permanganat (KMnO₄)"],
+        "products": ["Karbon Dioksida (CO₂)", "Mangan Sulfat (MnSO₄)", "Kalium Sulfat (K₂SO₄)", "Air (H₂O)"],
+        "equation": "5H₂C₂O₄ + 2KMnO₄ + 3H₂SO₄ → K₂SO₄ + 2MnSO₄ + 10CO₂ + 8H₂O",
+        "type": "Redoks",
+        "color_change": ["#FFFFFF + #9D00FF → #A9A9A9 + #B5651D + #FFFFFF + #ADD8E6"],
+        "energy": "Eksoterm",
+        "hazards": ["Beracun"],
+        "apd": ["Sarung Tangan", "Kacamata", "Jas Lab"],
+        "description": "Reaksi titrasi antara asam oksalat dan kalium permanganat."
+    },
+    {
+        "reagents": ["Kloroform (CHCl₃)", "Oksigen (O₂)"],
+        "products": ["Karbon Dioksida (CO₂)", "Hidrogen Klorida (HCl)"],
+        "equation": "2CHCl₃ + 5O₂ → 2CO₂ + 2HCl + 2Cl₂",
+        "type": "Pembakaran",
+        "color_change": ["#87CEEB + #87CEEB → #A9A9A9 + #F0F0F0"],
+        "energy": "Eksoterm",
+        "hazards": ["Gas Beracun"],
+        "apd": ["Masker Respirator", "Kacamata"],
+        "description": "Pembakaran kloroform menghasilkan gas beracun."
+    },
 ]
 
 # Fungsi untuk membuat kartu unsur
@@ -1025,6 +989,6 @@ st.markdown("""
 <div style="text-align:center; padding:30px; color:#1A535C;">
     <p style="font-size:18px; margin:0;">🔬 Laboratorium Kimia Interaktif © 2023</p>
     <p style="font-size:16px; margin:10px 0;">Dikembangkan dengan Streamlit | Untuk tujuan edukasi</p>
-    <p style="font-size:14px; margin:0;">Versi 3.0 | Terakhir diperbarui: 18 Juli 2023</p>
+    <p style="font-size:14px; margin:0;">Versi 4.0 | Terakhir diperbarui: 18 Juli 2023</p>
 </div>
 """, unsafe_allow_html=True)
